@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>MY LIBRARY</h1>
+    </header>
+
+    <div class="addBook">
+        <button class="addBtn">Add New Book</button>
+    </div>
+
+    <div class="btnFilter">
+        <button class="filterBtn" data-filter="all">View All</button>
+        <button class="filterBtn" data-filter="read">Read</button>
+        <button class="filterBtn" data-filter="notRead">Not Read</button>
+    </div>
+
+
+    <div class="errorModal">
+        <div class="error">
+            <p>Complete the form</p>
+            <button class="errorBtn">Ok</button>
+        </div>
+    </div>
+
+
+    <form class="modalContainer">
+        <div class="modal">
+            <div class="modalContent">
+                <label for="title">Title:</label>
+                <input type="text" id="title">
+            </div>
+            <div class="modalContent">
+                <label for="author">Author:</label>
+                <input type="text" id="author">
+            </div>
+            <div class="modalContent">
+                <label for="pages">Pages:</label>
+                <input type="number" id="pages">
+            </div>
+            <div>
+                <label for="checkbox">Check the box if you have read the book</label>
+                <input type="checkbox" id="checkbox" value="check">
+            </div>
+
+            <div class="addCancel">
+                <button class="add">Add</button>
+                <button class="cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="libraryContent"></div>
+
+    <!-- <footer>
+
+    </footer> -->
+
+    <script src="index.js"></script>
+</body>
+
+</html>
