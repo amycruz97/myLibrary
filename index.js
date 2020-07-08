@@ -14,9 +14,7 @@ const modalCheckBox = document.querySelector("#checkbox");
 
 const library = document.querySelector(".libraryContent");
 
-let myLibrary = [];
-
-
+let myLibrary = JSON.parse(localStorage.getItem('MyLibrary')) || []
 
 const hideModal = () => {
     modal.style.display = "none";
@@ -68,73 +66,14 @@ function addBookToLibrary(e) {
         let newBook = new Book(bookTitle, bookPages, bookAuthor, bookStatus);
         // console.log(newBook)
         myLibrary.push(newBook);
+        localStorage.setItem("MyLibrary", JSON.stringify(myLibrary));
 
         hideModal();
         render();
     }
 
-    function render() {
-        library.innerHTML = " ";
-
-        for (let i = 0; i < myLibrary.length; i++) {
-            if (myLibrary[i].read) {
-                library.innerHTML += `
-                <div data-card="card-${i}" class="card">
-                    <p><span class="cardContent">Title: </span> ${myLibrary[i].title} </p>
-                    <p><span class="cardContent">Author: </span> ${myLibrary[i].author} </p>
-                    <p> <span class="cardContent">Pages: </span> ${myLibrary[i].pages}</p>
-                    <p><span class="cardContent read">Read: </span> ${myLibrary[i].read}
-                    <!-- <a href="#"><i class="fas fa-check" ></i></a>-->
-                    </p>
-
-                    <div data-delete="delete-${i}" class="delete">
-                    <a href="#"><i class="fas fa-trash-alt"></i></a>
-                    </div>
-
-                </div>
-
-                `;
-            } else {
-                library.innerHTML += `
-                <div data-card="card-${i}" class="card">
-                    <p><span class="cardContent">Title: </span> ${myLibrary[i].title} </p>
-                    <p><span class="cardContent">Author: </span> ${myLibrary[i].author} </p>
-                    <p> <span class="cardContent">Pages: </span> ${myLibrary[i].pages}</p>
-                    <p><span class="cardContent notRead">Read: </span> ${myLibrary[i].read}
-                    <!-- <a href="#" "><i class="fas fa-times"></i></a>-->
-                    </p>
 
 
-                <div data-delete="delete-${i}" class="delete">
-                    <a href="#"><i class="fas fa-trash-alt"></i></a>
-                </div>
-
-                </div>
-                `;
-            }
-
-
-            function del(e) {
-
-                // console.log(e.currentTarget.dataset.delete)
-                const clickTarget = e.currentTarget.dataset.delete;
-                const cardToDelete = clickTarget.split('-')[1];
-                myLibrary.splice(parseInt(cardToDelete), 1);
-                // const card = document.querySelector('.card')
-                // card.remove()
-                render()
-
-            }
-
-            document.querySelectorAll('.delete').forEach((delBtn) => {
-                delBtn.addEventListener("click", del)
-
-            })
-
-
-
-        }
-    }
 
     // function filter(e) {
     //     const cards = document.querySelectorAll('.card')
@@ -171,3 +110,121 @@ function addBookToLibrary(e) {
     modalPages.value = "";
     modalCheckBox.checked = false;
 }
+
+
+
+function render() {
+    library.innerHTML = " ";
+
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].read) {
+            library.innerHTML += `
+            <div data-card="card-${i}" class="card">
+                <p><span class="cardContent">Title: </span> ${myLibrary[i].title} </p>
+                <p><span class="cardContent">Author: </span> ${myLibrary[i].author} </p>
+                <p> <span class="cardContent">Pages: </span> ${myLibrary[i].pages}</p>
+                <p class="read"><span class="cardContent">Read: </span> 
+                <a href="#"><i class="fas fa-check" ></i></a>
+                </p>
+
+                <div data-delete="delete-${i}" class="delete">
+                <a href="#"><i class="fas fa-trash-alt"></i></a>
+                </div>
+
+            </div>
+
+            `;
+        } else {
+            library.innerHTML += `
+            <div data-card="card-${i}" class="card">
+                <p><span class="cardContent">Title: </span> ${myLibrary[i].title} </p>
+                <p><span class="cardContent">Author: </span> ${myLibrary[i].author} </p>
+                <p> <span class="cardContent">Pages: </span> ${myLibrary[i].pages}</p>
+                <p class="notRead"><span class="cardContent">Read: </span> 
+                <a href="#" "><i class="fas fa-times"></i></a>
+                </p>
+
+
+            <div data-delete="delete-${i}" class="delete">
+                <a href="#"><i class="fas fa-trash-alt"></i></a>
+            </div>
+
+            </div>
+            `;
+        }
+
+
+
+
+
+
+    }
+
+
+
+    function del(e) {
+
+        // console.log(e.currentTarget.dataset.delete)
+        const clickTarget = e.currentTarget.dataset.delete;
+        const cardToDelete = clickTarget.split('-')[1];
+        myLibrary.splice(parseInt(cardToDelete), 1);
+        // const card = document.querySelector('.card')
+        // card.remove()
+
+        localStorage.removeItem('MyLibrary');
+        localStorage.setItem("MyLibrary", JSON.stringify(myLibrary));
+
+        render()
+
+    }
+
+    document.querySelectorAll('.delete').forEach((delBtn) => {
+        delBtn.addEventListener("click", del)
+
+    })
+}
+render()
+
+function filter(e) {
+    const cards = document.querySelectorAll('.card')
+    const filterTarget = e.currentTarget;
+    const all = filterTarget.classList.contains('all')
+    const isRead = filterTarget.classList.contains('read')
+
+    if (all) {
+        cards.forEach(card => {
+            card.style.display = 'block'
+
+        })
+
+    } else if (isRead) {
+        cards.forEach(card => {
+            const read = card.querySelector('.read')
+            if (read) {
+                card.style.display = 'block'
+            } else {
+                card.style.display = 'none'
+            }
+
+
+        })
+
+    } else if (!isRead) {
+        cards.forEach(card => {
+            const notRead = card.querySelector('.notRead')
+
+            if (notRead) {
+                card.style.display = 'block'
+            } else {
+                card.style.display = 'none'
+            }
+        })
+    }
+
+
+}
+
+const filterBtn = document.querySelectorAll('.filterBtn').forEach((filters) => {
+    filters.addEventListener("click", filter);
+
+})
