@@ -10,10 +10,14 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #DCDCDC;
+}
+
 header {
     color: var(--main-color);
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 button {
@@ -37,7 +41,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 4rem;
+    margin-top: 5rem;
 }
 
 .addBtn:hover {
@@ -47,7 +51,7 @@ button:hover {
 .btnFilter {
     display: flex;
     justify-content: center;
-    margin-top: 4rem;
+    margin-top: 5rem;
 }
 
 .filterBtn {
@@ -64,7 +68,7 @@ button:hover {
 
 .modalContainer {
     display: none;
-    position: fixed;
+    /* position: fixed; */
     z-index: 4;
     top: 0;
     left: 0;
@@ -77,10 +81,10 @@ button:hover {
     border-radius: 15px;
     background: var(--main-color);
     line-height: 3rem;
-    /* position: relative; */
+    position: relative;
     width: 50%;
     margin: 0 auto;
-    margin-top: 8rem;
+    margin-top: 5rem;
 }
 
 .modalContent {
@@ -111,13 +115,10 @@ input {
 
 .errorModal {
     display: none;
-    position: fixed;
-    z-index: 4;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    position: relative;
+    margin: 0 auto;
+    /* margin-top: 10rem; */
+    width: 40%;
 }
 
 .error {
@@ -140,4 +141,51 @@ input {
 .error-btn:hover {
     color: var(--color);
     background: red;
+}
+
+.libraryContent {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 5rem;
+}
+
+.card {
+    background-color: var(--main-color);
+    color: var(--color);
+    padding: 1rem;
+    line-height: 2;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.card:nth-child(n) {
+    margin-right: 3rem;
+    margin-top: 5rem;
+}
+
+.cardContent {
+    color: var(--color);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.fa-times {
+    color: red;
+    margin-left: 10px;
+}
+
+.fa-check {
+    color: var(--color);
+    margin-left: 10px;
+}
+
+.delete {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.delete i {
+    color: red;
 }
